@@ -2,7 +2,7 @@
 
 choices = []
 
-for x in range(1, 9):
+for x in range(1, 10):
     choices.append(x)
 
 playerOneTurn = True
@@ -11,15 +11,15 @@ winner = False
 
 def printboard():
     print('\n -----')
-    print('|' + choices[0] + '|' + choices[1] + '|' + choices[2] + '|')
+    print('|', choices[0], '|', choices[1], '|', choices[2], '|')
     print(' -----')
-    print('|' + choices[3] + '|' + choices[4] + '|' + choices[5] + '|')
+    print('|', choices[3], '|', choices[4], '|', choices[5], '|')
     print(' -----')
-    print('|' + choices[6] + '|' + choices[7] + '|' + choices[8] + '|')
+    print('|', choices[6], '|', choices[7], '|', choices[8], '|')
     print(' -----\n')
 
 
-while winner:
+while not winner:
     printboard()
 
     if playerOneTurn:
@@ -33,7 +33,7 @@ while winner:
         print("please enter a valid field")
         continue
 
-    if choices[choice - 1] == 'X' or choices[choice] == 'O':
+    if choices[choice - 1] == 'X' or choices[choice - 1] == 'O':
         print("illegal move, please try again")
         continue
 
