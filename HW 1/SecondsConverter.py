@@ -1,21 +1,25 @@
-def SecondsConverter():
+# Program for converting seconds into days, hours, minutes and seconds
+
+
+# SecondsConverter methods takes in the number of seconds from the user
+def seconds_converter():
     seconds = int(input('Enter Seconds: '))
-    numberofdays = int(seconds / 86400)
-    remainingseconds = seconds % 86400
-    numberofhours = int(remainingseconds/3600)
-    remainingseconds = remainingseconds % 3600
-    numberofminutes = int(remainingseconds/60)
-    remainingseconds = remainingseconds % 60
+    days = int(seconds / 86400)
+    remaining_seconds = seconds % 86400
+    hours = int(remaining_seconds/3600)
+    remaining_seconds = remaining_seconds % 3600
+    minutes = int(remaining_seconds/60)
+    remaining_seconds = remaining_seconds % 60
 
-    if numberofdays >= 1:
-        print('{} Days {} Hours {} Minutes {} Seconds'.format(numberofdays, numberofhours, numberofminutes, remainingseconds))
-    elif numberofhours >= 1:
-        print('{} Hours {} Minutes {} Seconds'.format(numberofhours, numberofminutes, remainingseconds))
-    elif numberofminutes >= 1:
-        print('{} Minutes {} Seconds'.format(numberofminutes, remainingseconds))
+    if days >= 1:
+        print('{} Days {} Hours {} Minutes {} Seconds'.format(days, hours, minutes, remaining_seconds))
+    elif hours >= 1:
+        print('{} Hours {} Minutes {} Seconds'.format(hours, minutes, remaining_seconds))
+    elif minutes >= 1:
+        print('{} Minutes {} Seconds'.format(minutes, remaining_seconds))
     else:
-        print('{} Seconds'.format(remainingseconds))
+        print('{} Seconds'.format(remaining_seconds))
 
 
-SecondsConverter()
+seconds_converter()
 
