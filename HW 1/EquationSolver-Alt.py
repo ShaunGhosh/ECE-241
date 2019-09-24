@@ -23,13 +23,13 @@ class EquationSolver:
         return 'Solution for x in √{}x + {} = {} is x = {}'.format(self.a, self.b, self.c, x)
 
 
-# variables a,b and c take the values for a, b & c from the user.a
+# variables a,b and c take the values for a, b & c from the user.
 a = int(input('Enter Value for a: '))
 b = int(input('Enter Value for b: '))
 c = int(input('Enter Value for c: '))
 
 
-#
+# solution variable is assigned EquationSolver with a constructor for a, b and c.
 solution = EquationSolver(a, b, c)
 print(solution.polynomial_solver())
 print(solution.monomial_solver())
