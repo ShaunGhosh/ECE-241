@@ -64,5 +64,3 @@ while not winner:
 
 # the output statement stating which player has won based on which player had the last move
 print("Player " + str(int(playerOneTurn + 1)) + " wins!\n")
-
-
