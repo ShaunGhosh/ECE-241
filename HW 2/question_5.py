@@ -4,10 +4,9 @@ def findLeftMost(arr, i, n):
     else:
         return i
 
-
 def findRightMost(arr, i , n):
     if (2*i + 2) < n:
-        return findRightMost(arr, 2*i + 2, n)
+        return findRightMost(arr, 2*i+2, n)
     else:
         return i
 

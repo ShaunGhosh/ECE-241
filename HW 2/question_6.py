@@ -77,7 +77,7 @@ def mergeSort_3_way(alist):
         else:
             merge2List(alist, firsthalf, secondhalf, i, j, pos)
             comparison = comparison + 1
-            
+
         print(comparison)
 
 
