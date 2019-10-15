@@ -10,7 +10,7 @@ remove()
 """
 
 class Node:
-    def __init__(self,initdata):
+    def __init__(self, initdata):
         self.data = initdata
         self.next = None
         self.prev = None
@@ -24,13 +24,13 @@ class Node:
     def getPrev(self):
         return self.prev
 
-    def setData(self,newdata):
+    def setData(self, newdata):
         self.data = newdata
 
     def setPrev(self, newprev):
         self.prev = newprev
 
-    def setNext(self,newnext):
+    def setNext(self, newnext):
         self.next = newnext
 
 
@@ -40,19 +40,83 @@ class OrderedDLList:
         self.tail = None
 
     def search(self, item):
-    """complete the code necessary to allow to search for an item in the DLL"""
+        """complete the code necessary to allow to search for an item in the DLL"""
+        current = self.head
+        found = False
+        stop = False
+        while current != None and not found and not stop:
+            if current.getData() == item:
+                found = True
+            else:
+                if current.getData() > item:
+                    stop = True
+                else:
+                    current = current.getNext()
+        return found
 
     def add(self, item):
         """complete the code necessary to allow to add an item in the DLL"""
+        current = self.head
+        previous = None
+        stop = False
+        while current != None and not stop:
+            if current.getData() > item:
+                stop = True
+            else:
+                previous = current
+                current = current.getNext()
+
+        temp = Node(item)
+        if current == None and previous == None:
+            temp.setNext(self.head)
+            self.head = temp
+        elif current == None:
+            temp.setNext(current)
+            previous.setNext(temp)
+            temp.setPrev(previous)
+        elif previous == None:
+            temp.setNext(current)
+            current = temp
+            current.getNext().setPrev(temp)
+        else:
+            temp.setNext(current)
+            previous.setNext(temp)
+            current.setPrev(temp)
+            temp.setPrev(previous)
 
     def isEmpty(self):
         return self.head == None
 
     def size(self):
         """complete the code necessary to the size of the DLL"""
+        current = self.head
+        count = 0
+        while current != None:
+            count += 1
+            current = current.getNext()
+        return count
 
     def remove(self, item):
         """complete the code necessary to allow to remove an item in the DLL"""
+        current = self.head
+        previous = None
+        found = False
+        while not found:
+            if current.getData() == item:
+                found = True
+            else:
+                previous = current
+                current = current.getNext()
+
+        if previous == None:
+            self.head = current.getNext()
+            current.setPrev(self.head)
+        elif current.getNext() == None:
+            previous.setNext(None)
+        else:
+            previous.setNext(current.getNext())
+            current.getNext().setPrev(current.getPrev)
+
 
     def printList(self):
         current = self.head
@@ -73,14 +137,16 @@ mylist.add(15)
 mylist.add(20)
 mylist.add(11)
 
-print(mylist.search(11))
-
+print(mylist.search(12))
 mylist.printList()
-print()
+print(mylist.size())
+
+#print()
 mylist.printRevList()
 
-mylist.remove(20)
-print()
-mylist.printList()
-print()
-mylist.printRevList()
+
+#mylist.remove(10)
+#mylist.printList()
+#mylist.printList()
+#print()
+#mylist.printRevList()
