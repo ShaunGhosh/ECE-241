@@ -70,8 +70,10 @@ class OrderedDLList:
         if current == None and previous == None:
             temp.setNext(self.head)
             self.head = temp
+            self.tail = temp
         elif current == None:
             temp.setNext(current)
+            self.tail = temp
             previous.setNext(temp)
             temp.setPrev(previous)
         elif previous == None:
@@ -113,6 +115,7 @@ class OrderedDLList:
             current.setPrev(self.head)
         elif current.getNext() == None:
             previous.setNext(None)
+            self.tail = previous
         else:
             previous.setNext(current.getNext())
             current.getNext().setPrev(current.getPrev)
@@ -137,16 +140,14 @@ mylist.add(15)
 mylist.add(20)
 mylist.add(11)
 
-print(mylist.search(12))
-mylist.printList()
-print(mylist.size())
+print(mylist.search(11))
 
-#print()
+mylist.printList()
+print()
 mylist.printRevList()
 
-
-#mylist.remove(10)
-#mylist.printList()
-#mylist.printList()
-#print()
-#mylist.printRevList()
+mylist.remove(20)
+print()
+mylist.printList()
+print()
+mylist.printRevList()
