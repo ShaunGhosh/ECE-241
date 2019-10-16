@@ -1,7 +1,7 @@
 """
 UMass ECE 241   -   Advanced Programming
 Homework #3     -   Fall 2019
-hw3_q1_2019.py      -   Double-linked list
+hw3_q1_2019.py  -   Double-linked list
 Complete the following methods in the code below!
 search()
 add()
@@ -120,7 +120,6 @@ class OrderedDLList:
             previous.setNext(current.getNext())
             current.getNext().setPrev(current.getPrev())
 
-
     def printList(self):
         current = self.head
         while current != None:
@@ -139,6 +138,8 @@ mylist.add(10)
 mylist.add(15)
 mylist.add(20)
 mylist.add(11)
+mylist.add(44)
+
 
 print(mylist.search(11))
 

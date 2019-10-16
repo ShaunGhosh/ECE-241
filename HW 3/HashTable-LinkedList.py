@@ -129,7 +129,7 @@ class HashTable:
         else:
             if self.slots[hashvalue] is not None:
                 if self.slots[hashvalue].search(key):
-                    self.slots[hashvalue].search(key).setKey(key)
+                    self.slots[hashvalue].search(key).setData(data)
                 else:
                     self.slots[hashvalue].add(key, data)
 
@@ -168,6 +168,7 @@ def main():
     print(h.slots)
     print(h.slot_size(1))
     print(h.slot_content(1))
+
 
 
 if __name__ == '__main__':
