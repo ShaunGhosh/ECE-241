@@ -77,9 +77,9 @@ class OrderedDLList:
             previous.setNext(temp)
             temp.setPrev(previous)
         elif previous == None:
-            temp.setNext(current)
-            current = temp
-            current.getNext().setPrev(temp)
+            temp.setNext(self.head)
+            self.head = temp
+            self.head.getNext().setPrev(temp)
         else:
             temp.setNext(current)
             previous.setNext(temp)
@@ -138,7 +138,6 @@ mylist.add(10)
 mylist.add(15)
 mylist.add(20)
 mylist.add(11)
-mylist.add(44)
 
 
 print(mylist.search(11))
@@ -147,7 +146,7 @@ mylist.printList()
 print()
 mylist.printRevList()
 
-mylist.remove(11)
+mylist.remove(20)
 print()
 mylist.printList()
 print()
