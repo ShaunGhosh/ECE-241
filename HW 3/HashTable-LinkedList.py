@@ -121,6 +121,17 @@ class HashTable:
 
     def put(self, key, data):
         """Only fill this function to put key, data in self.slot as per the question description"""
+        hashvalue = self.hashfunction(key, len(self.slots))
+
+        if self.slots[hashvalue] is None:
+            self.slots[hashvalue] = OrderedList()
+            self.slots[hashvalue].add(key, data)
+        else:
+            if self.slots[hashvalue] is not None:
+                if self.slots[hashvalue].search(key):
+                    self.slots[hashvalue].search(key).setKey(key)
+                else:
+                    self.slots[hashvalue].add(key, data)
 
     def slot_size(self, key):
         hashvalue = self.hashfunction(key, len(self.slots))
