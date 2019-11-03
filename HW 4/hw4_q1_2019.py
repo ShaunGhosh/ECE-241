@@ -30,17 +30,28 @@ def tree(n,l):
     pen.left(45)
     pen.backward(l)
 
-# tree(30,100)
-# mywin.exitonclick()
+#tree(3,100)
+#mywin.exitonclick()
 
 def fern(n,l):
-    if n==0 or l<2:
+    if n == 0 or l < 2:
         return
 
     pen.down()
-
     pen.forward(0.3*l)
     pen.left(55)
+    fern(n-1,l/2)
+    pen.right(55)
+    pen.forward(0.3*l)
+    pen.right(45)
+    fern(n-1,l/2)
+    pen.left(45)
+    pen.forward(0.3*l)
+    pen.left(5)
+    fern(n-1,l)
+    pen.right(5)
+    pen.backward(l*0.9)
 
-fern(5,10)
+
+fern(10, 200)
 mywin.exitonclick()
