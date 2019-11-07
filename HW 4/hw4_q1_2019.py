@@ -3,7 +3,7 @@ UMass ECE 241 - Advanced Programming
 Homework #4     Fall 2019
 hw4_q1_2019.py - Recursice fern with turtle
 """
-import math
+
 import turtle
 
 pen = turtle.Turtle()
@@ -53,5 +53,5 @@ def fern(n,l):
     pen.backward(l*0.9)
 
 
-fern(10, 200)
+fern(5, 100)
 mywin.exitonclick()
