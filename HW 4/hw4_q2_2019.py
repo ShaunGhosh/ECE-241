@@ -61,7 +61,7 @@ def main():
     t.shape("classic")
     t.speed(1)
 
-    a_Dist = 64
+    a_Dist = 160
     b_Dist = 67
     plankList = [1, 5, 10, 21, 25]
     plankColor = {1:'red',5:'blue',10:'black',21:'green',25:'violet'}
