@@ -1,8 +1,58 @@
+import sys
+
 class Vertex:
     def __init__(self, artist):
         self.id = artist
         self.songs = []
         self.coArtists = {}
+        self.color = 'white'
+        self.pred = None
+        self.disc = 0
+        self.fin = 0
+        self.dist = sys.maxsize
+
+    def setColor(self, color):
+        self.color = color
+
+    def setDistance(self, d):
+        self.dist = d
+
+    def setPred(self, p):
+        self.pred = p
+
+    def setDiscovery(self, dtime):
+        self.disc = dtime
+
+    def setFinish(self, ftime):
+        self.fin = ftime
+
+    def getFinish(self):
+        return self.fin
+
+    def getDiscovery(self):
+        return self.disc
+
+    def getPred(self):
+        return self.pred
+
+    def getDistance(self):
+        return self.dist
+
+    def getColor(self):
+        return self.color
+
+    def getConnections(self):
+        return self.connectedTo.keys()
+
+    def getWeight(self, nbr):
+        return self.connectedTo[nbr]
+
+    def __str__(self):
+        return str(self.id) + ":color " + self.color + ":disc " + str(self.disc) + ":fin " + str(
+            self.fin) + ":dist " + str(self.dist) + ":pred \n\t[" + str(self.pred) + "]\n"
+
+    def getId(self):
+        return self.id
 
     def addNeighbor(self, nbr, weight=0):
         self.coArtists[nbr] = weight
@@ -52,7 +102,27 @@ class Graph:
     def __iter__(self):
         return iter(self.vertList.values())
 
+# Bradley N. Miller, David L. Ranum
+# Introduction to Data Structures and Algorithms in Python
+# Copyright 2005
+#
+#queue.py
 
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def isEmpty(self):
+        return self.items == []
+
+    def enqueue(self, item):
+        self.items.insert(0,item)
+
+    def dequeue(self):
+        return self.items.pop()
+
+    def size(self):
+        return len(self.items)
 # WRITE YOUR OWN TEST UNDER THAT IF YOU NEED
 if __name__ == '__main__':
     g = Graph()

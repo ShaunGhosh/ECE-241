@@ -1,3 +1,4 @@
+
 class Song:
 
     def __init__(self, songRecord):
@@ -9,7 +10,9 @@ class Song:
             self.artist = tokens[2]
             self.duration = tokens[3]
             self.trackID = tokens[4]
-            self.collaborativeArtist = tokens[5]
+            self.colabArtists = tokens[5][:len(tokens[5])-1].split(';')
+
+
 
     def toString(self):
         return "Title: " + self.title + ";  Artist: " + self.artist
@@ -41,8 +44,9 @@ class SongLibrary:
         songfile = open(inputFilename, "r")          # Takes input filename, opens it in read mode
         for aline in songfile:                       # reads line by line and converts each line into a song object
             self.songArray.append(Song(aline))       # and then appends it to the songArray
-            self.size += 1                           # increases the size paramater by one each time an item is appended
-        songfile.close()                   # closes the file
+            self.size += 1
+
+        songfile.close()                            # closes the file
 
     """
     Linear search function.
@@ -87,17 +91,17 @@ class SongLibrary:
 
     def partition(self, alist, first, last):
 
-        pivotvalue = alist[first].title  # sets pivot value to title parameter of the songArray object
+        pivotvalue = alist[first].artist  # sets pivot value to title parameter of the songArray object
         leftmark = first + 1
         rightmark = last
 
         done = False
         while not done:
 
-            while leftmark <= rightmark and alist[leftmark].title <= pivotvalue:  # the core quicksort algorithm
+            while leftmark <= rightmark and alist[leftmark].artist <= pivotvalue:  # the core quicksort algorithm
                 leftmark = leftmark + 1
 
-            while alist[rightmark].title >= pivotvalue and rightmark >= leftmark:
+            while alist[rightmark].artist >= pivotvalue and rightmark >= leftmark:
                 rightmark = rightmark - 1
 
             if rightmark < leftmark:
@@ -125,5 +129,14 @@ if __name__ == '__main__':
     songLib = SongLibrary()
     songLib.loadLibrary("TenKsongs_proj2.csv")
     songLib.quickSort()
+    ulist = []
+    count =0
+    for n in range(0,len(songLib.songArray)):
+        if songLib.songArray[n].artist not in ulist:
+            ulist.append(songLib.songArray[n].artist)
+            count += 1
+
+    pprint.pprint(ulist)
+    print('count:'+ str(count))
     print(songLib.libraryInfo())
 
