@@ -239,6 +239,7 @@ E.g.:
         return iter(self.vertList.values())
 
     def dijkstra(self, start):
+
         # TODO: fill this function
         """
         Don't return anything
@@ -248,6 +249,7 @@ E.g.:
         1. Use the HeapPriorityQueue and it functions:(heapInsert,popMin,decreaseKey)
         2. Use the DijkstraGraph functions:(getDistance, getWeight, setDistance, setPred)
         """
+
         pass  # TODO remove this after filling the function
 
     def betweenness_func(self):
