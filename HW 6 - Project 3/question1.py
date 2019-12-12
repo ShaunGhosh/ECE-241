@@ -4,7 +4,6 @@ INFINITY = sys.maxsize
 
 
 class HeapPriorityQueue:
-
     def __init__(self, ):
         self.heapArray = []
         self.currentSize = len(self.heapArray)
@@ -35,7 +34,8 @@ class HeapPriorityQueue:
 
         # Change root, if needed
         if smallest != i:
-            self.heapArray[i], self.heapArray[smallest] = self.heapArray[smallest], self.heapArray[i]  # swap
+            self.heapArray[i], self.heapArray[smallest] = self.heapArray[
+                                                              smallest], self.heapArray[i]  # swap
             # Heapify the root.
             self.heapify(n, smallest)  # heap for one entry
 
@@ -84,7 +84,6 @@ class HeapPriorityQueue:
 
 
 class Vertex:
-
     def __init__(self, key):
         """
         self.id stores the id of the node from where we start Dijkstras
@@ -106,11 +105,16 @@ class Vertex:
             self.connectedTo[nbr] = [weight]
 
     def __str__(self):
-        return str(self.id) + ' connectedTo: ' + str(
-            ["node:{},distance:{}".format(x, self.connectedTo[x]) for x in self.connectedTo])
+        return str(self.id) + ' connectedTo: ' + str([
+            "node:{},distance:{}".format(x, self.connectedTo[x])
+            for x in self.connectedTo
+        ])
 
     def getConnections(self):
-        return [conn for conn in self.connectedTo.keys() if self.connectedTo[conn][0] < INFINITY]
+        return [
+            conn for conn in self.connectedTo.keys()
+            if self.connectedTo[conn][0] < INFINITY
+        ]
 
     def getId(self):
         return self.id
@@ -154,7 +158,7 @@ E.g.:
 
         g.dijkstra(g.getVertex('V0'))
 
-        print(g.getVertex('V0').connectedTo) gives {'V1':[1],'V2':[2],'V3':[2,['V1']],'V4':[2,['V3','V1']],'V5':[3,['V2']]}
+        print(g.getVertex('V0').connectedTo) gives {'V1':[1],'V2':[2],'V3':[2,[V1]],'V4':[2,[V3,V1]],'V5':[3,['V2']]}
     """
 
     def __init__(self):
@@ -187,12 +191,9 @@ E.g.:
         if t not in self.vertList:
             nv = self.addVertex(t)
         self.vertList[f].addPath(self.vertList[t].id, cost)
+        self.vertList[t].addPath(self.vertList[f].id, cost)
 
     def populatePaths(self):
-        """
-        creates a mesh (distance from every node to every node)
-        sets cost to infinity for disconnected nodes
-        """
         cost = INFINITY
         for f in self.vertList:
             for e in self.vertList:
@@ -216,41 +217,66 @@ E.g.:
     def setDistance(self, start=None, to=None, dist=INFINITY):
         # TODO: fill this function
         """
-        Don't return anything
         Vertex object has self.connectedTo member variable which consists of
         ['distance form start',['nodes in the path']]
 
         This function assigns the 'distance form start'
         """
-        pass  # TODO remove this after filling the function
+        if (start in self.vertList) and (to in self.vertList):
+            self.vertList[start].connectedTo[to][0] = dist
+        else:
+            return None
 
     def setPred(self, start=None, to=None, pred=None):
         # TODO: fill this function
         """
-        Don't return anything
         Vertex object has self.connectedTo member variable which consists of
         ['distance form start',['nodes in the path']]
 
         This function creates/populates the ['nodes in the path']
         """
-        pass  # TODO remove this after filling the function
+        # setting up an array of PreD, by appending the preD to the list
+        try:
+            self.vertList[start].connectedTo[to][1] = [pred]
+        except IndexError:
+            self.vertList[start].connectedTo[to].append([pred])
+        try:
+            self.vertList[start].connectedTo[to][1] += self.vertList[
+                start].connectedTo[pred][1]
+        except IndexError:
+            pass
 
     def __iter__(self):
         return iter(self.vertList.values())
 
-    def dijkstra(self, start):
-
+    def dijkstra(self, temp):
         # TODO: fill this function
         """
         Don't return anything
 
         Implement Dijktras:
-        0. Call self.populatePaths()
         1. Use the HeapPriorityQueue and it functions:(heapInsert,popMin,decreaseKey)
-        2. Use the DijkstraGraph functions:(getDistance, getWeight, setDistance, setPred)
+        2. Use getDistance, getWeight, setDistance, setPred
         """
+        aGraph = self
+        start = self.vertList[temp]
+        pq = HeapPriorityQueue()
+        aGraph.populatePaths()
+        pq.heapInsert([(aGraph.getDistance(start.id, v.id), v) for v in aGraph
+                       if v != start])
+        while not pq.isEmpty():
+            (wt, currentVert) = pq.popMin()
+            if currentVert:
+                for nextVert_id in currentVert.getConnections():
+                    newDist = aGraph.getDistance(start.id, currentVert.id) \
+                              + currentVert.getWeight(nextVert_id)
 
-        pass  # TODO remove this after filling the function
+                    if newDist < aGraph.getDistance(start.id, nextVert_id):
+                        aGraph.setDistance(start.id, nextVert_id, newDist)
+                        aGraph.setPred(start.id, nextVert_id, currentVert.id)
+                        pq.decreaseKey(aGraph.getVertex(nextVert_id),
+                                       newDist)  # repleace and heapify
+        del (start.connectedTo[start.id])
 
     def betweenness_func(self):
         # TODO: fill this function
@@ -261,15 +287,15 @@ E.g.:
 
         E.g.:
         for the case of
-        g.addEdge('V0', 'V1',1)
-        g.addEdge('V0', 'V2',2)
-        g.addEdge('V1', 'V3',1)
-        g.addEdge('V3', 'V4',1)
-        g.addEdge('V2', 'V5',1)
+        g.addEdge(V0, V1,1)
+        g.addEdge(V0, V2,2)
+        g.addEdge(V1, V3,1)
+        g.addEdge(V3, V4,1)
+        g.addEdge(V2, V5,1)
 
         g.dijkstra(g.getVertex('V0'))
 
-        print(g.getVertex('V0').connectedTo) gives {'V1':[1],'V2':[2],'V3':[2,['V1']],'V4':[2,['V3','V1']],'V5':[3,['V2']]}
+        print(g.getVertex('V0').connectedTo) gives {'V1':[1],'V2':[2],'V3':[2,[V1]],'V4':[2,[V3,V1]],'V5':[3,['V2']]}
 
         node_id: name of the node with maximum betweenness. e.g node_id = 'V1'
 
@@ -278,7 +304,7 @@ E.g.:
         e.g dictionary_of_betweenness={'V1':2,'V2':1,'V3':1}
         """
 
-        return max_bc_node_id, dictionary_of_betweenness
+        return bc_node, bc_count_dict
 
 
 ######################### Test your code below #########################
@@ -286,20 +312,16 @@ E.g.:
 
 def check_dijkstra():
     g = DijkstraGraph()
-    g.addEdge('V0', 'V1', 5)
-    g.addEdge('V0', 'V5', 1)
-    # g.addEdge('V1','V2',4)
-    # g.addEdge('V2','V3',9)
-    # g.addEdge('V3','V4',7)
-    # g.addEdge('V3','V5',3)
-    # g.addEdge('V4','V0',1)
-    # g.addEdge('V1','V2',1)
-    g.addEdge('V5', 'V2', 3)
-    # g.addEdge('V2', 'V6', 1)
-    # g.addEdge('V1','V4',8)
-    # g.addEdge('V4', 'V7', 1)
+    g.addEdge('V0', 'V1', 2)
+    g.addEdge('V2', 'V3', 3)
+    g.addEdge('V0', 'V4', 5)
+    g.addEdge('V3', 'V5', 1)
+    g.addEdge('V1', 'V5', 6)
+    g.addEdge('V2', 'V4', 1)
+    g.addEdge('V0', 'V3', 4)
+    g.addEdge('V5', 'V6', 5)
 
-    g.dijkstra(g.getVertex('V0'))
+    g.dijkstra('V0')
     ##############
 
     print(g.getVertex('V0').connectedTo)
@@ -322,3 +344,13 @@ def check_betweenness():
 
     # print(g.getVertex('V0').connectedTo, g.vertList)
     bc_node, bc_count_dict = g.betweenness_func()
+
+    print(bc_node, bc_count_dict)
+    # print(g.vertList)
+    # print(g.getVertex('V0'))
+
+
+if __name__ == '__main__':
+    check_dijkstra()
+    # check_betweenness()
+    print("Testing")
