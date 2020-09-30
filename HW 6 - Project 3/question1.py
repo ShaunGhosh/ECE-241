@@ -303,6 +303,20 @@ E.g.:
         as number of times node_id is a predecessor in all shortest paths.
         e.g dictionary_of_betweenness={'V1':2,'V2':1,'V3':1}
         """
+        bc_count_dict = {}     # initialize the empty dictionary
+        bc_node = None         # initialize an empty variable
+        for i in self.vertList:  # iterate through vertex list
+            self.dijkstra(i)     # call dijkstra on every vertex
+            
+        for n in self.vertList:                  # iterate through the vertex list
+            temp = self.getVertex(n).getPreds()  # make temp list of predecessor values
+            for t in temp:                       # iterating through the temp list
+                if t not in bc_count_dict:       # if the pred isn't in the dictionary
+                    bc_count_dict[t] = 1         # add value:'1' to the key:'t' as the vertex shows up the first time
+                else:                       # if the pred is in the dictionary
+                    bc_count_dict[t] += 1  # increment the value if the vertex already is in the dictionary
+                
+        bc_node = max(bc_count_dict)       # return the key:value pair with the max value item
 
         return bc_node, bc_count_dict
 
@@ -352,5 +366,5 @@ def check_betweenness():
 
 if __name__ == '__main__':
     check_dijkstra()
-    # check_betweenness()
+    check_betweenness()
     print("Testing")
